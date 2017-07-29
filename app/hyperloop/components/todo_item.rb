@@ -4,7 +4,7 @@ class TodoItem < Hyperloop::Component
     INPUT(type: :checkbox, checked: params.todo.completed).on(:click) do |evt|
       params.todo.update(completed: !params.todo.completed)
     end
-    SPAN { params.todo.title }
+    EditItem(todo: params.todo)
     A { ' -X-' }.on(:click) { params.todo.destroy }
   end
 end
