@@ -1,5 +1,9 @@
 class Index < Hyperloop::Component
   render(SECTION) do
-    'list of Todos will go here'
+    UL do
+      Todo.each do |todo|
+        TodoItem(todo: todo)
+      end
+    end
   end
 end
