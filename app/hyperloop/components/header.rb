@@ -2,10 +2,6 @@ class Header < Hyperloop::Component
   state(:new_todo) { Todo.new }
 
   render(HEADER) do
-    EditItem(
-      todo:      state.new_todo,
-      on_save:   proc { puts 'hello'; mutate.new_tudo Todo.new },
-      on_cancel: proc {}
-    )
+    EditItem(todo: state.new_todo).on(:save) { mutate.new_todo Todo.new }
   end
 end
