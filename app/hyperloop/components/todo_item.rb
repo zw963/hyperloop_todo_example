@@ -4,7 +4,16 @@ class TodoItem < Hyperloop::Component
 
   render(LI) do
     if state.editing
-      EditItem(todo: params.todo)
+      # 如果处在编辑状态, 使用 EditItem 组件(代表正在编辑页面的组件).
+      # 这里为自定义 on_save/on_cancel 事件绑定了 handler 方法.
+      # 此时, EditItem 的 params.on_save 返回的是 handler 对象.(一个 Proc)
+
+      # 有有这些自定义事件, 点奇怪的是:
+      # - 自定义事件当 EditItem 被 mount 后立即发生.
+      # - 要小心和浏览器内部事件名称冲突, 否则行为可能会出错.
+      EditItem(todo: params.todo).on(:save, :cancel) do
+        mutate.editing false
+      end
     else
       INPUT(type: :checkbox, checked: params.todo.completed).on(:click) do
         params.todo.update(completed: !params.todo.completed)
