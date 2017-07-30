@@ -8,9 +8,7 @@ class TodoItem < Hyperloop::Component
       # 这里为自定义 on_save/on_cancel 事件绑定了 handler 方法.
       # 此时, EditItem 的 params.on_save 返回的是 handler 对象.(一个 Proc)
 
-      # 有有这些自定义事件, 点奇怪的是:
-      # - 自定义事件当 EditItem 被 mount 后立即发生.
-      # - 要小心和浏览器内部事件名称冲突, 否则行为可能会出错.
+      # 注意: 这里用 event 很难解释
       EditItem(todo: params.todo).on(:save, :cancel) do
         mutate.editing false
       end
