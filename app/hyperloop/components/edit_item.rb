@@ -13,7 +13,7 @@ class EditItem < Hyperloop::Component
   after_mount { Element[dom_node].focus }
 
   render do
-    edit_input = INPUT(defaultValue: params.todo.title)
+    edit_input = INPUT(defaultValue: params.todo.title, key: params.todo.object_id)
     edit_input.on(:key_down) do |evt|
       next unless evt.key_code == 13
       params.todo.update(title: evt.target.value)
